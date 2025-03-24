@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Toggle } from "@/components/ui/toggle";
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
-import { Menu, Moon, Search, Shirt } from "lucide-react";
+import { Menu, Moon, Search } from "lucide-react";
 
 export default function Component() {
   const links = [
