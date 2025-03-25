@@ -22,7 +22,7 @@ const Featured = () => {
     <section className="mt-10 container mx-auto">
       <div className="text-center">
         <h2 className="scroll-m-20 text-3xl font-semibold tracking-tight transition-colors mb-2">
-          Featured Clothes
+          Featured Gadgets
         </h2>
         <p className="leading-7 font-light">Our Best Sellers</p>
       </div>
