@@ -27,7 +27,7 @@ export default function Banner() {
   ];
 
   return (
-    <section>
+    <section className="max-w-11/12 mx-auto mt-5">
       <Swiper
         spaceBetween={30}
         centeredSlides={true}
@@ -36,7 +36,7 @@ export default function Banner() {
           delay: 2000,
         }}
         modules={[Autoplay, Pagination, Navigation]}
-        className="mySwiper"
+        className="mySwiper rounded-md"
       >
         {bannerContent.map((content) => (
           <SwiperSlide key={content.id}>
