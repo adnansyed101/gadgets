@@ -11,46 +11,47 @@ interface IProduct extends Document {
   createdAt: Date;
 }
 
-const ProductSchema: Schema = new Schema({
-  name: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-  description: {
-    type: String,
-    required: true,
-  },
-  price: {
-    type: Number,
-    required: true,
-    min: 0, // Dummy amounts
-  },
-  stock: {
-    type: Number,
-    required: true,
-    min: 0,
-  },
-  category: {
-    type: Schema.Types.ObjectId,
-    ref: "Category",
-    required: true,
-  },
-  seller: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
-    required: true, // Only sellers can list products
-  },
-  images: [
-    {
-      url: String,
-      altText: String,
+const ProductSchema: Schema = new Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+      trim: true,
     },
-  ],
-  createdAt: {
-    type: Date,
-    default: Date.now,
+    description: {
+      type: String,
+      required: true,
+    },
+    price: {
+      type: Number,
+      required: true,
+      min: 0, // Dummy amounts
+    },
+    stock: {
+      type: Number,
+      required: true,
+      min: 0,
+    },
+    category: {
+      type: Schema.Types.ObjectId,
+      ref: "Category",
+      required: true,
+    },
+    seller: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true, // Only sellers can list products
+    },
+    images: [
+      {
+        url: String,
+        altText: String,
+      },
+    ],
   },
-});
+  {
+    timestamps: true,
+  }
+);
 
 export default mongoose.model<IProduct>("Product", ProductSchema);
