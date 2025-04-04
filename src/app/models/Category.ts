@@ -5,7 +5,7 @@ interface ICategory extends Document {
   description: string;
 }
 
-const CategorySchema: Schema = new Schema(
+const CategorySchema: Schema<ICategory> = new Schema<ICategory>(
   {
     name: {
       type: String,

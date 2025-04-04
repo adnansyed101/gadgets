@@ -11,7 +11,7 @@ interface IProduct extends Document {
   createdAt: Date;
 }
 
-const ProductSchema: Schema = new Schema(
+const ProductSchema: Schema<IProduct> = new Schema<IProduct>(
   {
     name: {
       type: String,

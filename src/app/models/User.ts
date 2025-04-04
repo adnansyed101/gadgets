@@ -1,6 +1,6 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
-interface IUser extends Document {
+interface IUser extends mongoose.Document {
   name: string;
   email: string;
   password: string;
@@ -18,13 +18,9 @@ interface IUser extends Document {
   createdAt: Date;
 }
 
-const UserSchema: Schema = new Schema(
+const UserSchema: Schema<IUser> = new Schema<IUser>(
   {
-    name: {
-      type: String,
-      required: true,
-      trim: true,
-    },
+    name: { type: String, required: true, trim: true },
     email: {
       type: String,
       required: true,
@@ -64,10 +60,6 @@ const UserSchema: Schema = new Schema(
     paidEarnings: {
       type: Number,
       default: 0, // Earnings already paid out
-    },
-    isActive: {
-      type: Boolean,
-      default: true, // For soft deletion or account suspension
     },
   },
   { timestamps: true }
