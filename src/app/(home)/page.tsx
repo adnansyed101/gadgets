@@ -1,5 +1,5 @@
-import Banner from "@/components/Page/Home/Banner";
-import Featured from "@/components/Page/Home/Featured";
+import Banner from "./components/Banner";
+import Featured from "./components/Featured";
 
 export default function Home() {
   return (
