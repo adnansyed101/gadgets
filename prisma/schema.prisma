@@ -14,10 +14,50 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  Customer
+  Seller
+  Admin
+}
+
 model User {
- id Int @id @default(autoincrement())
- name String
- email String @unique
- phone String
- 
+  id           Int         @id @default(autoincrement())
+  image        String
+  name         String
+  username     String      @unique
+  email        String      @unique
+  phone_number String      @unique
+  role         Role        @default(Customer)
+  addresses    Addresses[]
+  created_at   DateTime    @default(now())
+  updated_at   DateTime    @updatedAt
+}
+
+model Addresses {
+  id             Int      @id @default(autoincrement())
+  user           User     @relation(fields: [userId], references: [id])
+  userId         Int
+  address_line_1 String
+  address_line_2 String
+  country        String
+  city           String
+  postal_code    String
+  created_at     DateTime @default(now())
+  updated_at     DateTime @updatedAt
+}
+
+model Categories {
+  id             Int              @id @default(autoincrement())
+  name           String
+  description    String
+  created_at     DateTime         @default(now())
+  updated_at     DateTime         @updatedAt
+  sub_categories Sub_Categories[]
+}
+
+model Sub_Categories {
+  id           Int        @id @default(autoincrement())
+  name         String
+  category     Categories @relation(fields: [categoriesId], references: [id])
+  categoriesId Int // This reference the parent of the sub category
 }
