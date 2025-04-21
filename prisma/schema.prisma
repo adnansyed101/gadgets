@@ -20,7 +20,7 @@ enum Role {
   Admin
 }
 
-model User {
+model Users {
   id           Int         @id @default(autoincrement())
   image        String
   name         String
@@ -31,11 +31,13 @@ model User {
   addresses    Addresses[]
   created_at   DateTime    @default(now())
   updated_at   DateTime    @updatedAt
+  wishlist     Wishlist[]
+  cart         Cart[]
 }
 
 model Addresses {
   id             Int      @id @default(autoincrement())
-  user           User     @relation(fields: [userId], references: [id])
+  user           Users    @relation(fields: [userId], references: [id])
   userId         Int
   address_line_1 String
   address_line_2 String
@@ -47,17 +49,87 @@ model Addresses {
 }
 
 model Categories {
-  id             Int              @id @default(autoincrement())
+  id             Int             @id @default(autoincrement())
   name           String
   description    String
-  created_at     DateTime         @default(now())
-  updated_at     DateTime         @updatedAt
-  sub_categories Sub_Categories[]
+  created_at     DateTime        @default(now())
+  updated_at     DateTime        @updatedAt
+  sub_categories SubCategories[]
 }
 
-model Sub_Categories {
+model SubCategories {
   id           Int        @id @default(autoincrement())
   name         String
   category     Categories @relation(fields: [categoriesId], references: [id])
   categoriesId Int // This reference the parent of the sub category
+  created_at   DateTime   @default(now())
+  updated_at   DateTime   @updatedAt
+  products     Products[]
 }
+
+model Products {
+  id              Int            @id @default(autoincrement())
+  name            String
+  description     String
+  image           String
+  sub_category    SubCategories  @relation(fields: [sub_category_id], references: [id])
+  sub_category_id Int
+  created_at      DateTime       @default(now())
+  updated_at      DateTime       @updatedAt
+  product_skus    ProductsSkus[]
+  wishlist        Wishlist[]
+  cart_item       CartItem[]
+}
+
+model ProductAttributes {
+  id                  Int            @id @default(autoincrement())
+  type                String
+  value               String
+  created_at          DateTime       @default(now())
+  updated_at          DateTime       @updatedAt
+  products_skus_color ProductsSkus[] @relation("color")
+  products_skus_model ProductsSkus[] @relation("model")
+}
+
+model ProductsSkus {
+  id                 Int               @id @default(autoincrement())
+  attribute_color    ProductAttributes @relation("color", fields: [color_attribute_id], references: [id])
+  color_attribute_id Int
+  attribute_model    ProductAttributes @relation("model", fields: [attribut_model_id], references: [id])
+  attribut_model_id  Int
+  price              Int
+  quantity           Int
+  created_at         DateTime          @default(now())
+  updated_at         DateTime          @updatedAt
+  Products           Products?         @relation(fields: [productsId], references: [id])
+  productsId         Int?
+}
+
+model Wishlist {
+  id         Int      @id @default(autoincrement())
+  product    Products @relation(fields: [product_id], references: [id])
+  product_id Int
+  user       Users    @relation(fields: [user_id], references: [id])
+  user_id    Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Cart {
+  id         Int        @id @default(autoincrement())
+  user       Users      @relation(fields: [user_id], references: [id])
+  user_id    Int
+  total      Int
+  created_at DateTime   @default(now())
+  updated_at DateTime   @updatedAt
+  cart_item  CartItem[]
+}
+
+model CartItem {
+  id          Int      @id @default(autoincrement())
+  cart        Cart     @relation(fields: [cart_id], references: [id])
+  cart_id     Int
+  product     Products @relation(fields: [products_id], references: [id])
+  products_id Int
+}
+
