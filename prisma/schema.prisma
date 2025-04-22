@@ -32,8 +32,8 @@ model Users {
 
 model Addresses {
   id             Int      @id @default(autoincrement())
-  user           Users    @relation(fields: [userId], references: [id])
-  userId         Int
+  user           Users    @relation(fields: [user_id], references: [id])
+  user_id        Int
   address_line_1 String
   address_line_2 String
   country        String
@@ -67,7 +67,7 @@ model Products {
   name            String
   description     String
   image           String
-  quantity         Int
+  quantity        Int
   price           Int
   sub_category    SubCategories @relation(fields: [sub_category_id], references: [id])
   sub_category_id Int
@@ -110,8 +110,8 @@ model CartItem {
 
 model PaymentDetails {
   id         Int          @id @default(autoincrement())
-  orders     OrderDetails @relation(fields: [oder_id], references: [id])
-  oder_id    Int
+  orders     OrderDetails @relation(fields: [order_id], references: [id])
+  order_id   Int          @unique
   amount     Int
   provider   String
   status     String
@@ -120,14 +120,14 @@ model PaymentDetails {
 }
 
 model OrderDetails {
-  id              Int              @id @default(autoincrement())
-  user            Users            @relation(fields: [user_id], references: [id])
+  id              Int             @id @default(autoincrement())
+  user            Users           @relation(fields: [user_id], references: [id])
   user_id         Int
   payment_id      String
   total           Int
-  payment_details PaymentDetails[]
-  created_at      DateTime         @default(now())
-  updated_at      DateTime         @updatedAt
+  payment_details PaymentDetails?
+  created_at      DateTime        @default(now())
+  updated_at      DateTime        @updatedAt
   OrderItem       OrderItem[]
 }
 
