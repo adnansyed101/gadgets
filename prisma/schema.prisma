@@ -21,18 +21,19 @@ enum Role {
 }
 
 model Users {
-  id           Int         @id @default(autoincrement())
-  image        String
-  name         String
-  username     String      @unique
-  email        String      @unique
-  phone_number String      @unique
-  role         Role        @default(Customer)
-  addresses    Addresses[]
-  created_at   DateTime    @default(now())
-  updated_at   DateTime    @updatedAt
-  wishlist     Wishlist[]
-  cart         Cart[]
+  id            Int            @id @default(autoincrement())
+  image         String
+  name          String
+  username      String         @unique
+  email         String         @unique
+  phone_number  String         @unique
+  role          Role           @default(Customer)
+  addresses     Addresses[]
+  created_at    DateTime       @default(now())
+  updated_at    DateTime       @updatedAt
+  wishlist      Wishlist[]
+  cart          Cart[]
+  order_details OrderDetails[]
 }
 
 model Addresses {
@@ -79,6 +80,7 @@ model Products {
   product_skus    ProductsSkus[]
   wishlist        Wishlist[]
   cart_item       CartItem[]
+  order_item      OrderItem[]
 }
 
 model ProductAttributes {
@@ -101,8 +103,9 @@ model ProductsSkus {
   quantity           Int
   created_at         DateTime          @default(now())
   updated_at         DateTime          @updatedAt
-  Products           Products?         @relation(fields: [productsId], references: [id])
-  productsId         Int?
+  Products           Products          @relation(fields: [products_id], references: [id])
+  products_id        Int
+  order_item         OrderItem[]
 }
 
 model Wishlist {
@@ -131,5 +134,42 @@ model CartItem {
   cart_id     Int
   product     Products @relation(fields: [products_id], references: [id])
   products_id Int
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
 }
 
+model PaymentDetails {
+  id         Int          @id @default(autoincrement())
+  orders     OrderDetails @relation(fields: [oder_id], references: [id])
+  oder_id    Int
+  amount     Int
+  provider   String
+  status     String
+  created_at DateTime     @default(now())
+  updated_at DateTime     @updatedAt
+}
+
+model OrderDetails {
+  id              Int              @id @default(autoincrement())
+  user            Users            @relation(fields: [user_id], references: [id])
+  user_id         Int
+  payment_id      String
+  total           Int
+  payment_details PaymentDetails[]
+  created_at      DateTime         @default(now())
+  updated_at      DateTime         @updatedAt
+  OrderItem       OrderItem[]
+}
+
+model OrderItem {
+  id              Int          @id @default(autoincrement())
+  order_details   OrderDetails @relation(fields: [order_id], references: [id])
+  order_id        Int
+  product         Products     @relation(fields: [product_id], references: [id])
+  product_id      Int
+  products_sku    ProductsSkus @relation(fields: [products_sku_id], references: [id])
+  products_sku_id Int
+  quantity        Int
+  created_at      DateTime     @default(now())
+  updated_at      DateTime     @updatedAt
+}
