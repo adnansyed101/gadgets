@@ -1,4 +1,14 @@
 import Link from "next/link";
+import { cn } from "@/lib/utils";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -9,40 +19,97 @@ import { Input } from "@/components/ui/input";
 import { Toggle } from "@/components/ui/toggle";
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
 import { Menu, Moon, Search } from "lucide-react";
+import React from "react";
+
+const categories: { name: string; href: string }[] = [
+  {
+    name: "Phones",
+    href: "/",
+  },
+  {
+    name: "Tablets",
+    href: "/",
+  },
+  {
+    name: "Accessories",
+    href: "/",
+  },
+  {
+    name: "Mac",
+    href: "/",
+  },
+  {
+    name: "PC Accessories",
+    href: "/",
+  },
+  {
+    name: "Camera",
+    href: "/",
+  },
+];
 
 export default function Navbar() {
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-white dark:border-gray-800 dark:bg-gray-950">
-      <div className="container mx-auto flex h-16 max-w-6xl items-center justify-between px-4 md:px-6">
-        <Link href="/" className="text-gray-700 font-semibold" prefetch={false}>
+    <header className="sticky top-0 z-50 w-full max-w-[1400px] mx-auto">
+      <div className="flex h-16 items-center justify-between">
+        <Link href="/" className="font-semibold text-2xl" prefetch={false}>
           Gadgets
           <span className="sr-only">Gadgets</span>
         </Link>
-        <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
-          <Link href="/" className="nav-links-lg" prefetch={false}>
-            Home
-          </Link>
-          <Link href="/about" className="nav-links-lg" prefetch={false}>
-            About
-          </Link>
-          <Link href="/dashboard" className="nav-links-lg" prefetch={false}>
-            Services
-          </Link>
-          <Link href="/contact" className="nav-links-lg" prefetch={false}>
-            Contact
-          </Link>
-        </nav>
+        <NavigationMenu className="hidden md:block">
+          {/* Home Link */}
+          <NavigationMenuList>
+            <NavigationMenuItem>
+              <Link href="/" legacyBehavior passHref>
+                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  Home
+                </NavigationMenuLink>
+              </Link>
+            </NavigationMenuItem>
+            {/* Category Link */}
+            <NavigationMenuItem>
+              <NavigationMenuTrigger>Categories</NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className="w-[150px]">
+                  {categories.map((category) => (
+                    <ListItem
+                      key={category.name}
+                      name={category.name}
+                      href={category.href}
+                    ></ListItem>
+                  ))}
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+            {/* About Us Link */}
+            <NavigationMenuItem>
+              <Link href="/" legacyBehavior passHref>
+                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  About Us
+                </NavigationMenuLink>
+              </Link>
+            </NavigationMenuItem>
+            {/* Contact Us Link */}
+            <NavigationMenuItem>
+              <Link href="/" legacyBehavior passHref>
+                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  Contact Us
+                </NavigationMenuLink>
+              </Link>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
         <div className="flex items-center gap-4">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon" className="rounded-full">
-                <Search className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+                <Search className="h-5 w-5" />
                 <span className="sr-only">Search</span>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-[300px] p-4">
+            <DropdownMenuContent className="w-72 p-4">
               <div className="relative">
-                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500 dark:text-gray-400" />
+                <Search className="absolute left-2.5 top-2.5 h-4 w-4" />
                 <Input
                   type="search"
                   placeholder="Search..."
@@ -52,7 +119,7 @@ export default function Navbar() {
             </DropdownMenuContent>
           </DropdownMenu>
           <Toggle aria-label="Toggle dark mode" className="rounded-full">
-            <Moon className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+            <Moon className="h-5 w-5" />
           </Toggle>
           <Button className="hidden md:block">Sign Up</Button>
           <Sheet>
@@ -62,22 +129,52 @@ export default function Navbar() {
                 size="icon"
                 className="rounded-full md:hidden"
               >
-                <Menu className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+                <Menu className="h-5 w-5" />
                 <span className="sr-only">Toggle navigation menu</span>
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="md:hidden">
               <div className="grid gap-4 p-4">
-                <Link href="#" className="nav-links-sm" prefetch={false}>
+                <Link
+                  href="#"
+                  className="text-sm font-medium "
+                  prefetch={false}
+                >
                   Home
                 </Link>
-                <Link href="#" className="nav-links-sm" prefetch={false}>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <span className="text-sm font-medium ">Categories</span>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-24 p-4">
+                    <ul className="w-[100px]">
+                      {categories.map((category) => (
+                        <li key={category.name} className="mb-1 border-b">
+                          <Link href={category.href}>{category.name}</Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                <Link
+                  href="#"
+                  className="text-sm font-medium "
+                  prefetch={false}
+                >
                   About
                 </Link>
-                <Link href="#" className="nav-links-sm" prefetch={false}>
+                <Link
+                  href="#"
+                  className="text-sm font-medium "
+                  prefetch={false}
+                >
                   Services
                 </Link>
-                <Link href="#" className="nav-links-sm" prefetch={false}>
+                <Link
+                  href="#"
+                  className="text-sm font-medium "
+                  prefetch={false}
+                >
                   Contact
                 </Link>
                 <Link href="#" prefetch={false}>
@@ -91,3 +188,21 @@ export default function Navbar() {
     </header>
   );
 }
+
+const ListItem = ({ name, href }: { name: string; href: string }) => {
+  return (
+    <li>
+      <NavigationMenuLink asChild>
+        <Link
+          href={href}
+          className={cn(
+            "block select-none space-y-1 rounded-sm p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+          )}
+        >
+          <div className="text-sm font-medium leading-none">{name}</div>
+        </Link>
+      </NavigationMenuLink>
+    </li>
+  );
+};
+ListItem.displayName = "ListItem";
