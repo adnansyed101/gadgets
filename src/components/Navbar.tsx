@@ -161,7 +161,7 @@ export default function Navbar() {
                   className="text-sm font-medium "
                   prefetch={false}
                 >
-                  About
+                  About Us
                 </Link>
                 <Link
                   href="#"
