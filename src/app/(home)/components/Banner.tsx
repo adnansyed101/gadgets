@@ -1,62 +1,54 @@
 "use client";
 
-import Image from "next/image";
-import React from "react";
-import appleVision from "@/assets/Banner/vision-pro.jpg";
-import laptop from "@/assets/Banner/laptop.jpg";
+import laptop from "@/assets/banner/macbook.png";
+import headphone from "@/assets/banner/headphone.png";
+import speaker from "@/assets/banner/speaker.png";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import Slide from "./Slide";
 
 export default function Banner() {
   const bannerContent = [
     {
       id: 1,
-      img: appleVision,
+      image: laptop,
+      subtitle: "Explore Mac Accessories.",
       title: "Explore the Future",
-      description: "Discover cutting-edge tech that elevate your lifestyle.",
     },
     {
       id: 2,
-      img: laptop,
-      title: "The Power Store",
-      description: "Want some power ? Here we will give you all.",
+      image: headphone,
+      title: "Stainless Steel AI Headphones.",
+      subtitle: "Exclusive 20% Off",
+    },
+    {
+      id: 3,
+      image: speaker,
+      title: "Explore options for Audiophiles.",
+      subtitle: "Exclusive 20% Off",
     },
   ];
 
   return (
-    <section className="max-w-11/12 mx-auto mt-5">
+    <section className="mt-5 bg-[url(/banner/sprinkle.svg)]">
       <Swiper
-        spaceBetween={30}
-        centeredSlides={true}
-        loop={true}
-        autoplay={{
-          delay: 2000,
+        direction={"horizontal"}
+        pagination={{
+          clickable: true,
         }}
         modules={[Autoplay, Pagination, Navigation]}
-        className="mySwiper rounded-md"
+        autoplay={{
+          delay: 2500,
+          disableOnInteraction: false,
+        }}
+        className="mySwiper"
       >
         {bannerContent.map((content) => (
           <SwiperSlide key={content.id}>
-            <figure className="relative">
-              <Image
-                src={content.img}
-                alt="banner"
-                className="w-full h-[550px] object-cover"
-              />
-              <div className="transparent-layer overlay-bg absolute w-full h-full top-0 text-white">
-                <div className="h-full w-full flex flex-col justify-center items-center">
-                  <h1 className="text-4xl font-bold sm:text-6xl">
-                    {content.title}
-                  </h1>
-                  <p className="mt-4 text-lg sm:text-xl">
-                    {content.description}
-                  </p>
-                </div>
-              </div>
-            </figure>
+            <Slide content={content} />
           </SwiperSlide>
         ))}
       </Swiper>
