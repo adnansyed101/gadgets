@@ -120,7 +120,3 @@
     @apply bg-background text-foreground;
   }
 }
-
-.overlay-bg {
-  background: rgba(0, 0, 0, 0.7);
-}
