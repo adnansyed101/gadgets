@@ -50,8 +50,8 @@ const categories: { name: string; href: string }[] = [
 
 export default function Navbar() {
   return (
-    <header className="sticky top-0 z-50 w-full max-w-[1400px] mx-auto">
-      <div className="flex h-16 items-center justify-between">
+    <header className="sticky top-0 z-50 w-full bg-white shadow-sm">
+      <div className="flex h-16 items-center justify-between max-w-[1400px] mx-auto">
         <Link href="/" className="font-semibold text-2xl" prefetch={false}>
           Gadgets
           <span className="sr-only">Gadgets</span>
@@ -121,7 +121,7 @@ export default function Navbar() {
           <Toggle aria-label="Toggle dark mode" className="rounded-full">
             <Moon className="h-5 w-5" />
           </Toggle>
-          <Button className="hidden md:block">Sign Up</Button>
+          <Button>Sign Up</Button>
           <Sheet>
             <SheetTrigger asChild>
               <Button
@@ -176,9 +176,6 @@ export default function Navbar() {
                   prefetch={false}
                 >
                   Contact
-                </Link>
-                <Link href="#" prefetch={false}>
-                  <Button>Sign Up</Button>
                 </Link>
               </div>
             </SheetContent>
