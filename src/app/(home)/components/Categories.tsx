@@ -38,7 +38,7 @@ const categories = [
 
 export default function Categories() {
   return (
-    <section className="py-10 px-4 max-w-7xl mx-auto mt-30">
+    <section className="py-24 px-4 max-w-7xl mx-auto">
       <h2 className="text-3xl font-bold text-center mb-8">Shop by Category</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
         {categories.map(({ name, icon: Icon, href }) => (
